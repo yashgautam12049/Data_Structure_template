@@ -1,13 +1,13 @@
-class Disjointset{
-    vector<int>rank,parent;
+class dsu{
     public:
-    Disjointset(int n){
+    vector<int>rank,parent,size;
+    dsu(int n){
         rank.resize(n+1,0);
         parent.resize(n+1,0);
-        // size.resize(n+1,0);
+        size.resize(n+1);
         for(int i=0;i<=n;i++){
             parent[i]=i;
-            // size[i]=i;
+            size[i]=1;
         }
     }
     int findUpar(int node){
@@ -16,7 +16,7 @@ class Disjointset{
         }
         return parent[node]=findUpar(parent[node]);
     }
-    void Unionbyrank(int u,int v){
+    void unionbyrank(int u,int v){
         int ulp_u=findUpar(u);
         int ulp_v=findUpar(v);
         if (rank[ulp_u] < rank[ulp_v]) {
@@ -28,6 +28,19 @@ class Disjointset{
         else {
             parent[ulp_v] = ulp_u;
             rank[ulp_u]++;
+        }
+    }
+    void unionbysize(int u, int v) {
+        int ulp_u = findUpar(u);
+        int ulp_v = findUpar(v);
+        if (ulp_u == ulp_v) return;
+        if (size[ulp_u] < size[ulp_v]) {
+            parent[ulp_u] = ulp_v;
+            size[ulp_v] += size[ulp_u];
+        }
+        else {
+            parent[ulp_v] = ulp_u;
+            size[ulp_u] += size[ulp_v];
         }
     }
 };
