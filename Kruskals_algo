@@ -1,0 +1,14 @@
+int kruskal(vector<vector<int>>& edges,int skip,int add,int n){
+        int sum=0;
+        dsu ds(n);
+        for(auto it:edges){
+            int u=it[0];
+            int v=it[1];
+            int wt=it[2];
+            if(ds.findUpar(u)!=ds.findUpar(v)){
+                ds.unionbyrank(u,v);
+                sum+=wt;
+            }
+        }
+        return sum;
+    }
