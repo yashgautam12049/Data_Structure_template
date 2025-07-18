@@ -1,0 +1,43 @@
+class dsu{
+    vector<int>parent;
+    vector<int>rank;
+    int n;
+    int component;
+    public:
+    dsu(int n){
+        this->n=n;
+        component=n;
+        parent.resize(n);
+        rank.resize(n);
+        for(int i=0;i<n;i++){
+            parent[i]=i;
+            rank[i]=1;
+        }
+    }
+    int find(int x){
+        if(x==parent[x]){
+            return x;
+        }
+        return parent[x]=find(parent[x]);
+    }
+    void Union(int x,int y){
+        int par_x=find(x);
+        int par_y=find(y);
+        if(par_x==par_y) return;
+        if(rank[par_x]>rank[par_y]){
+            parent[par_y]=par_x;
+            
+        }else if(rank[par_x]<rank[par_y]){
+            parent[par_x]=par_y;
+        }else{
+            parent[par_y]=par_x;
+            rank[par_x]++;
+        }
+        component--;
+    }
+    int componen(){
+
+       return component;
+    }
+
+};
