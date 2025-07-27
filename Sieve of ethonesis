@@ -1,0 +1,13 @@
+vector<int> seive() {
+        const int NMAX = 1024;
+        bitset<NMAX/2> bits;
+        bits.set();
+        int cnt = 1;
+        vector<int> primes = {2};
+        for (int i = 3; i / 2 < (int)bits.size(); i = 2 * bits._Find_next(i / 2) + 1) {
+            primes.push_back(i);
+            ++cnt;
+            for (auto j = (int64_t) i * i / 2; j < (int)bits.size(); j += i) bits[j] = 0;
+        }
+        return primes;
+    }
